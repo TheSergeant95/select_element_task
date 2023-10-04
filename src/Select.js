@@ -15,7 +15,10 @@ const Select = () => {
   // Загрузка элементов с сервера (вызывается при монтировании компонента, скролле вниз и обновлении поиска)
   useEffect(() => {
 	if(fetching){
-		setIsLoading(true);
+		// Чтобы скролл не сбрасывался при каждой подгрузке новых элементов
+		if(sortedItems.length === 0) {
+			setIsLoading(true);
+		}
 		fetch('http://localhost:3001/api/get?'+ new URLSearchParams({
 			page: currentPage,
 			limit: 10,
